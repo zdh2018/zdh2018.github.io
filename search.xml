@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>数据结构</title>
+    <url>/2021/08/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="时间-复杂度和-空间-复杂度"><a href="#时间-复杂度和-空间-复杂度" class="headerlink" title="[时间]复杂度和 [空间]复杂度"></a>[时间]复杂度和 [空间]复杂度</h1><h2 id="1-衡量算法优劣"><a href="#1-衡量算法优劣" class="headerlink" title="1 衡量算法优劣"></a>1 衡量算法优劣</h2><p>主要还是从算法所占用的「时间」和「空间」两个维度去考量。</p>
+<ul>
+<li>时间维度：是指执行当前算法所消耗的时间，我们通常用「时间复杂度」来描述。</li>
+<li>空间维度：是指执行当前算法需要占用多少内存空间，我们通常用「空间复杂度」来描述。</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2-时间复杂度"><a href="#2-时间复杂度" class="headerlink" title="2 时间复杂度"></a>2 时间复杂度</h2><p>大O表示法：算法的时间复杂度通常用O符号表示==T[n] = O(f(n))==，表示T(n)以f(n)为界。我们用代码中执行的基本操作的数量级来表征该算法的时间复杂度。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hello</span> <span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>( m = <span class="number">1</span> ; m &lt; n ; m++)&#123;</span><br><span class="line">	i = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>( i &lt; n )&#123;</span><br><span class="line">	    i = i * <span class="number">2</span>;</span><br><span class="line">   	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上述代码为例，外部循环的循环数量级是n，内部循环调用次数为==t，t^2^ = n==，所以内部循环调用次数为log(n)，语句i=i*2的执行次数为n * log(n)。</p>
+<blockquote>
+<p>当然，这里的时间复杂度是一种相对表示方法，即相对于某种操作执行的次数，上面的基本操作是乘法，但是如果将乘法换成加法，就是相对于加法操作的数量级，而<strong>乘法操作和加法操</strong>作的时间消耗是不一样的。</p>
+</blockquote>
+<h3 id="1-1-递归时间复杂度"><a href="#1-1-递归时间复杂度" class="headerlink" title="1.1 递归时间复杂度"></a>1.1 递归时间复杂度</h3><blockquote>
+<p>在递归中，一个及其重要的元素就是单层调用逻辑，即==一次递归调用中函数逻辑==，我们执行单层递归，有一个时间复杂度T，而递归调用也会有一个调用深度，即递归栈深度depth。总的时间复杂度为==O( T * depth）==。</p>
+</blockquote>
+<p>而递归调用又分为单次递归调用和多次递归调用，单次递归调用相对比较简单，举例如下：</p>
+<p>二分查找</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( l &gt; r ) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> mid = l + (r-l)/<span class="number">2</span>; </span><br><span class="line">    <span class="keyword">if</span>( arr[mid] == target ) <span class="keyword">return</span> mid;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( arr[mid] &gt; target ) </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">binarySearch</span>(arr, l, mid<span class="number">-1</span>, target);    <span class="comment">// 左边 </span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">binarySearch</span>(arr, mid+<span class="number">1</span>, r, target);   <span class="comment">// 右边</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个递归中，虽然有两个递归调用，但是实际执行时，智慧选择一个递归执行，要么左边，要么右边，所以是==单递归调用==，递归层数为log(n)，单层复杂度为O(1)，所以二分查找的时间复杂度为O(logn)。</p>
+<p>但是面对==多递归==，问题就更复杂了，解题思路也更加多样化</p>
+<p>以下面代码为例，每次函数调用中包含两次递归调用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// O(2^n) 指数级别的数量级，后续动态规划的优化点</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">f</span>(n<span class="number">-1</span>) + <span class="built_in">f</span>(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729100855800-2080642450.png" alt="image-20210729100852172"></p>
+<p>该算法的递归调用树结果如上图所示。</p>
+<p>当n == 3时，这层调用复杂度为O(1)，递归调用两个f(2)，f(2)单层调用时间复杂度为O(1)，依次下去，总的时间复杂度为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2^0 + 2^1 + 2^2 + …… + 2^n</span><br><span class="line">= 2^(n+1) – 1</span><br></pre></td></tr></table></figure>
+
+<p>总的时间复杂度O(2^n^)</p>
+<blockquote>
+<p>多递归的解决思路：</p>
+<ul>
+<li><p>1 列出递归单层调用时间复杂度和递推关系式，例如</p>
+</li>
+<li><p>T(n) =O(1)    T(n) = 2*T(n/2) + O(n)</p>
+</li>
+</ul>
+<p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729101644278-409647556.png" alt="image-20210729101644215"></p>
+<ul>
+<li><p>2 用特征方程的方式求解，线性代数内容，相对复杂。通常不会涉及到。</p>
+</li>
+<li><p>3 用递归树求解：</p>
+</li>
+<li><p>先列出递归调用的递归树</p>
+</li>
+<li><p>然后将所有节点复杂度相加</p>
+</li>
+<li><p>T(n) =1 T(n) = T(n/3) + T(2n/3) + n</p>
+</li>
+</ul>
+<p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729102022603-1376242602.png" alt="image-20210729102022484"></p>
+<p>树的最大深度h=log<del>3/2</del>n,所以时间复杂度O(nlog<del>3/2</del>n)=O(nlog<del>2</del>n)。</p>
+<ul>
+<li><p>4 主方法（较为实用）</p>
+</li>
+<li><p>主方法仅适用于递归方程为如下形式的一般方法：T(n)=a*T(n/b) + f(n)</p>
+</li>
+<li><p>我们的目标：提取出a，b，f(n)，然后计算temp = log<del>b</del>a，比较n^temp^和f(n)</p>
+</li>
+<li><p>n^temp^大，T(n) = O(n^temp^)；一样大，O(n^temp^* log<del>2</del>n)；f(n)大，T(n) = O(f(n))</p>
+</li>
+<li><p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729102633825-87513030.png" alt="image-20210729102633706"></p>
+</li>
+</ul>
+</blockquote>
+<h3 id="1-2-最好、最坏时间复杂度"><a href="#1-2-最好、最坏时间复杂度" class="headerlink" title="1.2 最好、最坏时间复杂度"></a>1.2 最好、最坏时间复杂度</h3><p>最好时间复杂度是在最理想情况下，代码的执行时间；最坏时间复杂度是指在最坏情况下代码的执行时间。</p>
+<p>以下面代码为例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span>[] <span class="built_in">array</span>, <span class="keyword">int</span> n, <span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (  <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">array</span>[i] == x) &#123;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>上述代码中最好情况为第一个元素就是要查找元素，复杂度O(1)</li>
+<li>最坏情况为没有找到，便利完整个数组n个元素最后返回-1，时间复杂度为O(n)</li>
+</ul>
+<h3 id="1-3-平均时间复杂度"><a href="#1-3-平均时间复杂度" class="headerlink" title="1.3 平均时间复杂度"></a>1.3 平均时间复杂度</h3><p>最好最坏反映的都是极端情况下的时间复杂度，这时引入平均时间复杂度，给每种情况加权，计算加权平均值（类似于期望）以上面find代码为例，x出现在所有位置概率相同，为1/(n+1)，故平均时间复杂度可以这样计算：</p>
+<p>(1 + 2 + … + n) /(n+1) =n/2</p>
+<h2 id="3-空间复杂度"><a href="#3-空间复杂度" class="headerlink" title="3 空间复杂度"></a>3 空间复杂度</h2><p>空间复杂度是指运行完一个程序所需内存的大小。利用程序的空间复杂度，可以对程序的运行所需要的内存多少有个预先估计。</p>
+<p>分为：</p>
+<ul>
+<li>形参变量占用的空间（在调用函数中声明了形参，占用空间）当前函数仅仅用指针指向。</li>
+<li>和函数中临时变量占用的空间</li>
+</ul>
+<p>我们仅需要考虑临时变量占用的空间。</p>
+<p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729105728911-1140587789.png" alt="image-20210729105726862"></p>
+<p><img src="https://img2020.cnblogs.com/blog/2371305/202107/2371305-20210729105747415-2116442721.png" alt="image-20210729105747002"></p>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>categories</tag>
+      </tags>
+  </entry>
+</search>
