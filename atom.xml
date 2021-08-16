@@ -3,11 +3,11 @@
   <title>勿念不悔の博客</title>
   
   <subtitle>记录生活中的点点滴滴</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="http://zdh2018.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="http://zdh2018.github.io/"/>
   <updated>2021-08-16T04:45:44.899Z</updated>
-  <id>http://example.com/</id>
+  <id>http://zdh2018.github.io/</id>
   
   <author>
     <name>勿念不悔</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>数据结构</title>
-    <link href="http://example.com/2021/08/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    <id>http://example.com/2021/08/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</id>
+    <link href="http://zdh2018.github.io/2021/08/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <id>http://zdh2018.github.io/2021/08/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</id>
     <published>2021-08-12T11:46:01.000Z</published>
     <updated>2021-08-16T04:45:44.899Z</updated>
     
@@ -34,10 +34,10 @@
     
     
     
-    <category term="数据结构" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <category term="数据结构" scheme="http://zdh2018.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     
-    <category term="categories" scheme="http://example.com/tags/categories/"/>
+    <category term="categories" scheme="http://zdh2018.github.io/tags/categories/"/>
     
   </entry>
   
